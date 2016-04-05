@@ -1,0 +1,14 @@
+{
+	"segments": {
+		"left": [
+		  {
+				"name": "virtualenv",
+				"function": "powerline.segments.common.env.virtualenv",
+				"highlight_groups": ["virtualenv"],
+				"draw_soft_divider": false,
+				"priority": 20,
+				"before":"ⓔ  "
+			},
+		]
+	}
+}

@@ -1,0 +1,7 @@
+{
+	"name": "Default color scheme",
+	"groups": {
+		"virtualenv":               { "fg": "gray10", "bg": "gray5", "attrs": ["bold"] },
+
+	},
+}
