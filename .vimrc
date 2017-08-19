@@ -131,7 +131,9 @@ let g:syntastic_aggregate_errors=1
 let g:syntastic_check_on_open=0
 let g:syntastic_check_on_wq=1
 let g:syntastic_python_python_exec='/usr/bin/python3'
+let g:syntastic_python_checkers = ['pylint', 'python', 'pyflakes']
 let g:syntastic_javascript_checkers=['eslint']
+autocmd BufUnload,BufLeave * lclose " This should make sure loc list is closed with the main buffer
 
 " Vim-fugitive
 
@@ -141,6 +143,7 @@ let g:NERDTreeIgnore=['\.pyc$', '\~$'] " Files to not display
 let g:NERDTreeShowFiles=1
 let g:NERDTreeShowHidden=1
 let g:NERDTreeShowBookmarks=1
+let g:NERDTreeQuitOnOpen=1
 "let NERDTreeMinimalUI=1
 "au vimenter * nerdtree "auto-open on vim start
 "au bufenter * if (winnr("$") == 1 && exists("g:nerdtree")
@@ -162,11 +165,11 @@ let g:NERDTreeIndicatorMapCustom = {
 
 " NERDTree-Tabs plugin
 map <F3> :NERDTreeTabsToggle<CR>
-let g:nerdtree_tabs_open_on_console_startup=1 " Open on startup
+let g:nerdtree_tabs_open_on_console_startup=0 " Open on startup
 let g:nerdtree_tabs_smart_startup_focus=2 " Always focus file tab on startup
 let g:nerdtree_tabs_synchronize_view=0 " Synchronize scroll and cursor in all tabs
-let g:nerdtree_tabs_synchronize_focus=1 " Synchronize focus in all tabs
-let g:nerdtree_tabs_autofind=0 " Automatically find and select currently open file
+let g:nerdtree_tabs_synchronize_focus=0 " Synchronize focus in all tabs
+let g:nerdtree_tabs_autofind=1 " Automatically find and select currently open file
 
 " Python-mode
 let g:pymode_run_bind='<C-F5>' " Run current file
@@ -264,12 +267,14 @@ let g:html5_aria_attributes_complete=1
 let g:javascript_enable_domhtmlcss=1 " Highlight HTML/CSS syntax in JS files
 let g:javascript_fold=1 " Enable JS code folding
 let g:javascript_ignore_javascriptdoc=0 " Enable JSDoc syntax highlighting
+let g:javascript_plugin_jsdoc = 1 " Enbales JSDoc syntax highlighting
+let g:javascript_plugin_flow = 1 " Enbales Flow syntax highlighting
 
 " Vim-json
 let g:vim_json_syntax_conseal=0 " Disable quotes concealing
 
 " Vim-jsx
-let g:jsx_ext_require=0 " Allow for JSX in JS files
+let g:jsx_ext_require=1 " Allow for JSX in JS files
 let g:jsx_pragma_required=0 " Allow for JSX in post v0.12 files
 
 " Javascript-libraries-syntax.vim
