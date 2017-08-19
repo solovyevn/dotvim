@@ -181,6 +181,8 @@ let g:pymode_syntax=1 " Disable to use other syntax highlighting
 let g:pymode_syntax_print_as_function=1 " Highlight print as function
 let g:pymode_virtualenv=1 " Autodetect virtualenv
 let g:pymode_virtualenv_path=$VIRTUAL_ENV " Path to virtualenv
+let g:pymode_options_max_line_length=119
+let g:pymode_lint_options_pep8={'max_line_length': g:pymode_options_max_line_length}
 
 " SimplyFold (additional settings are in python ftplugin)
 let g:SimplyFold_docstring_preview=1 " Show docstrings for folded code
@@ -355,7 +357,7 @@ set autoindent
 set noexpandtab
 
 " Mark 80th column
-set colorcolumn=80
+set colorcolumn=120
 highlight ColorColumn ctermbg=233
 
 " Highlight last text entered in insert mode
@@ -517,3 +519,6 @@ set incsearch
 " Key mapping to save vim session state,
 " to launch vim with saved state use 'vim -S' command in the shell
 nnoremap <Leader>s <ESC>:mksession<CR>
+
+" Auto-add new line at the end of file
+set eol

@@ -9,10 +9,10 @@ setlocal fileformat=unix
 setlocal encoding=utf-8
 
 " Set number of columns
-setlocal textwidth=79
+setlocal textwidth=119
 
 " Mark 80th column
-setlocal colorcolumn=80
+setlocal colorcolumn=120
 "highlight ColorColumn ctermbg=magenta
 
 " Enable all syntax highlighting
