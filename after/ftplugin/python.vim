@@ -9,17 +9,17 @@ setlocal fileformat=unix
 setlocal encoding=utf-8
 
 " Set number of columns
-setlocal textwidth=119
+setlocal textwidth=100
 
 " Mark 80th column
-setlocal colorcolumn=120
+setlocal colorcolumn=101
 "highlight ColorColumn ctermbg=magenta
 
 " Enable all syntax highlighting
 let python_highlight_all=1
 
 " Enable Python mode plugin
-let g:pymode=1
+let g:pymode=0
 
 " Settings for SimplyFold plugin
 setlocal foldexpr=SimplyFold(v:lnum)

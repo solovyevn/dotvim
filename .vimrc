@@ -105,6 +105,8 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'terryma/vim-multiple-cursors'
 " Type less for HTML and CSS codding
 Plugin 'mattn/emmet-vim'
+" Go language support
+Plugin 'fatih/vim-go'
 
 " All plugins must be added above the following line
 call vundle#end()
@@ -130,7 +132,7 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_aggregate_errors=1
 let g:syntastic_check_on_open=0
 let g:syntastic_check_on_wq=1
-let g:syntastic_python_python_exec='/usr/bin/python3'
+let g:syntastic_python_python_exec='python3'
 let g:syntastic_python_checkers = ['pylint', 'python', 'pyflakes']
 let g:syntastic_javascript_checkers=['eslint']
 autocmd BufUnload,BufLeave * lclose " This should make sure loc list is closed with the main buffer
@@ -179,6 +181,9 @@ let g:pymode_rope_completion_bind='<C-Space>' " Autocomplete
 let g:pymode=0 " Disable by default, enable in Python filetype file
 let g:pymode_python='python3'
 let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'pylint', 'mccabe']
+let g:pymode_rope=0
+let g:pymode_motion=0
+let g:pymode_indent=0
 let g:pymode_rope_completion=0 " Disable to use other completion
 let g:pymode_syntax=1 " Disable to use other syntax highlighting
 let g:pymode_syntax_print_as_function=1 " Highlight print as function
@@ -205,8 +210,8 @@ let g:gundo_close_on_revert=1 " Auto close graph window after making a choice
 
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_python_binary_path='/usr/bin/python3'
-let g:ycm_server_python_interpreter='/usr/bin/python2' " Force use of Python,
+let g:ycm_python_binary_path='python3'
+let g:ycm_server_python_interpreter='python3' " Force use of Python,
 " that was used during compilation, for server side to prevent various errors
 let g:ycm_complete_in_comments=1
 let g:ycm_collect_identifiers_from_comments_and_strings=0
@@ -215,7 +220,7 @@ let g:ycm_key_list_select_completion=['<TAB>', '<Down>'] " Keys to select the co
 let g:ycm_key_list_previous_completion=['<S-TAB>', '<Up>'] " Keys to select the completion (backward)
 let g:ycm_goto_buffer_command='horizontal-split' " Where to show the result of Go-To
 " (other useful settings are 'vertical-split' and 'new-tab')
-let g:ycm_disable_for_files_larger_than_kb=1024
+let g:ycm_disable_for_files_larger_than_kb=10240
 nmap <leader>g <ESC>:YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " IndentPython
@@ -323,6 +328,37 @@ let g:emmet_html5=1 " Enable HTML5 mode
 let g:user_emmet_leader_key='<C-e>' " Key to invoke Emmet, default is <C-y>
 let g:user_emmet_mode='a' " Modes in which to create Emmet mappings (n,v,i,a)
 let g:user_emmet_settings={} " Redefine default Emmet settings
+
+" Go-vim
+let g:go_autodetect_gopath = 1
+let g:go_test_show_name = 0 " Show test name before errors and log output
+let g:go_test_timeout = '30s' " :GoTest timeout
+let g:go_play_browser_command = 'chrome' " Browser to use for the docs and such
+let g:go_auto_type_info = 1 " Show type info for the word under the cursor
+let g:go_info_mode = 'guru' " Tool to use for :GoInfo, options: gopls, gocode, guru
+let g:go_auto_sameids = 1 " Highlight uses of the word under the cursor
+let g:go_updatetime = 200 " Update data from source files every this milliseconds
+let g:go_jump_to_error = 0 " Jump to first error when running :GoRun, :GoBuild
+let g:go_list_height = 0 " Quickfix and locations list window height
+let g:go_fmt_autosave = 1 " Auto run :GoFmt on save
+let g:go_fmt_options = {} " Options to pass to 'gofmt'
+let g:go_fmt_fail_silently = 0 " Show location list for :GoFmt errors
+let g:go_fmt_experimental = 1 " Updates undo history with :GoFmt modifications
+let g:go_doc_keywordprg_enabled = 1 " Run 'godoc' instead of 'man'
+let g:go_doc_max_height = 30 " Height of the :GoDoc window
+let g:go_def_mode = 'guru' " Tool to use for :GoDef, options: gopls, godef, guru
+let g:go_def_mappings_enabled = 1 " Use default key mappings for :GoDef
+let g:go_def_reuse_buffer = 1
+let g:go_bin_path = '/usr/local/go/bin' " Path to go-vim tools
+let g:go_metalinter_autosave = 1 " Run :GoMetaLinter on save
+let g:go_gocode_unimported_packages = 1 " Whether to show suggestions from unimported packages
+let g:go_template_autocreate = 0 " Use template for new files
+let g:go_template_file = 'new_file_template.go' " Template file to use
+let g:go_template_test_file = 'new_test_file_template.go' " Template file to use for tests
+let g:go_template_use_pkg = 1 " Whether to use package declaration instead of a template
+let g:go_highlight_space_tab_error = 1 " Highlight spaces following tabs
+let g:go_highlight_trailing_whitespace_error = 1 " Highlight trailing whitespace
+
 " ---------- PLUGINS' SETTINGS END ----------
 " ========== PLUGINS PART END ==========
 " Enable color scheme based on VIM mode
@@ -331,7 +367,8 @@ if has ('gui_running')
 	colorscheme solarized
 else
 "	set background=dark
-	colorscheme holokai
+" 	holokai, antares, monokain, ir_black, molokai, blackboard, ingretu
+ 	colorscheme ingretu
 endif
 
 " Set the key to switch background in set color scheme
@@ -362,7 +399,7 @@ set autoindent
 set noexpandtab
 
 " Mark 80th column
-set colorcolumn=120
+set colorcolumn=100
 highlight ColorColumn ctermbg=233
 
 " Highlight last text entered in insert mode
@@ -474,6 +511,14 @@ nnoremap Y y&
 
 " Map Ctrl-Y to paste from "0 register (special register with last yank)
 nnoremap <C-Y> "0p
+vnoremap <C-Y> "0p
+
+" Mapping to delete without yanking
+nnoremap <Leader>d "_d
+vnoremap <Leader>d "_d
+
+" Mapping to replace selected text without yanking
+vnoremap <Leader>p "_dP
 
 " Split screen configuration
 set splitbelow
